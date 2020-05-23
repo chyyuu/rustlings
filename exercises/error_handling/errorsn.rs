@@ -15,21 +15,26 @@
 // type goes where the question marks are, and how do we return
 // that type from the body of read_and_validate?
 //
-// Execute `rustlings hint errorsn` for hints :)
+// Execute `rustlings hint errorsn` for hintrustlings hint errorsn`s :)
 
-// I AM NOT DONE
+
 
 use std::error;
 use std::fmt;
 use std::io;
+// enum myError {
+//     io::Error,
+//     ParseIntError,
+//     CreationError
+// };
 
 // PositiveNonzeroInteger is a struct defined below the tests.
-fn read_and_validate(b: &mut dyn io::BufRead) -> Result<PositiveNonzeroInteger, ???> {
+fn read_and_validate(b: &mut dyn io::BufRead) -> Result<PositiveNonzeroInteger, Box<dyn error::Error>> {
     let mut line = String::new();
-    b.read_line(&mut line);
-    let num: i64 = line.trim().parse();
-    let answer = PositiveNonzeroInteger::new(num);
-    answer
+    b.read_line(&mut line)?;
+    let num: i64 = line.trim().parse()?;
+    let answer = PositiveNonzeroInteger::new(num)?;
+    Ok(answer)
 }
 
 //
